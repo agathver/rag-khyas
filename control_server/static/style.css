@@ -1,0 +1,18 @@
+html, body, .screen {
+    height: 100%;
+}
+
+body {
+    background: #222;
+}
+
+.screen {
+    padding: 4em;
+}
+
+.screen img {
+    display: block;
+    margin: auto;
+    height: calc(100% - 8em);
+    box-shadow: 0 0 5px #444444;
+}

@@ -21,7 +21,7 @@ def setup():
     GPIO.setup("P8_18", GPIO.OUT)
     GPIO.setup("P8_26", GPIO.OUT)
     GPIO.setup("P9_23", GPIO.OUT)
-    GPIO.setup("P9_25", GPIO.OUT)
+    GPIO.setup("P9_25", GPIO.IN)
     GPIO.setup("P9_27", GPIO.OUT)
     GPIO.setup("P9_15", GPIO.OUT)
 
@@ -125,3 +125,22 @@ def servo_down():
 def stop():
     global loop
     loop = False
+
+def get_distance():
+    GPIO.setmode(GPIO.BCM)
+    GPIO.output("P9_23", GPIO.HIGH)
+    time.sleep(0.00001)
+    GPIO.output("P9_23", GPIO.LOW)
+    start = time.time()
+
+    while GPIO.input("P9_25") == 0:
+        start = time.time()
+
+    while GPIO.input("P9_25") == 1:
+        stop = time.time()
+
+    elapsed = stop - start
+    distance = (elapsed * 34300) / 2
+
+    return distance
+

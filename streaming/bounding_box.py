@@ -5,41 +5,9 @@ import mxnet as mx
 def plot_bbox(img, bboxes, scores=None, labels=None, thresh=0.5,
               class_names=None, colors=None, ax=None,
               reverse_rgb=False, absolute_coordinates=True):
-    """Visualize bounding boxes.
+    
+    img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
 
-    Parameters
-    ----------
-    img : numpy.ndarray or mxnet.nd.NDArray
-        Image with shape `H, W, 3`.
-    bboxes : numpy.ndarray or mxnet.nd.NDArray
-        Bounding boxes with shape `N, 4`. Where `N` is the number of boxes.
-    scores : numpy.ndarray or mxnet.nd.NDArray, optional
-        Confidence scores of the provided `bboxes` with shape `N`.
-    labels : numpy.ndarray or mxnet.nd.NDArray, optional
-        Class labels of the provided `bboxes` with shape `N`.
-    thresh : float, optional, default 0.5
-        Display threshold if `scores` is provided. Scores with less than `thresh`
-        will be ignored in display, this is visually more elegant if you have
-        a large number of bounding boxes with very small scores.
-    class_names : list of str, optional
-        Description of parameter `class_names`.
-    colors : dict, optional
-        You can provide desired colors as {0: (255, 0, 0), 1:(0, 255, 0), ...}, otherwise
-        random colors will be substituded.
-    ax : matplotlib axes, optional
-        You can reuse previous axes if provided.
-    reverse_rgb : bool, optional
-        Reverse RGB<->BGR orders if `True`.
-    absolute_coordinates : bool
-        If `True`, absolute coordinates will be considered, otherwise coordinates
-        are interpreted as in range(0, 1).
-
-    Returns
-    -------
-    matplotlib axes
-        The ploted axes.
-
-    """
     # from matplotlib import pyplot as plt
 
     if labels is not None and not len(bboxes) == len(labels):
@@ -76,26 +44,25 @@ def plot_bbox(img, bboxes, scores=None, labels=None, thresh=0.5,
             continue
         if labels is not None and labels.flat[i] < 0:
             continue
-        # cls_id = int(labels.flat[i]) if labels is not None else -1
-        # if cls_id not in colors:
-        #     if class_names is not None:
-        #         colors[cls_id] = plt.get_cmap('hsv')(cls_id / len(class_names))
-        #     else:
-        #         colors[cls_id] = (random.random(), random.random(), random.random())
-
-        xmin, ymin, xmax, ymax = [int(x) for x in bbox]
         
-        cv2.rectangle(img, (xmin, ymin), (xmax, ymax), (255,255,255), 3)
-        # ax.add_patch(rect)
+        cls_id = int(labels.flat[i]) if labels is not None else -1
+        
+        if class_names is not None and cls_id < len(class_names):
+            class_name = class_names[cls_id]
+        else:
+            class_name = str(cls_id) if cls_id >= 0 else ''
 
-    #     if class_names is not None and cls_id < len(class_names):
-    #         class_name = class_names[cls_id]
-    #     else:
-    #         class_name = str(cls_id) if cls_id >= 0 else ''
-    #     score = '{:.3f}'.format(scores.flat[i]) if scores is not None else ''
-    #     if class_name or score:
-    #         ax.text(xmin, ymin - 2,
-    #                 '{:s} {:s}'.format(class_name, score),
-    #                 bbox=dict(facecolor=colors[cls_id], alpha=0.5),
-    #                 fontsize=12, color='white')
-    # return ax
+        #print(class_name, xmin, ymin, xmax, ymax)
+
+        score = '{:.3f}'.format(scores.flat[i]) if scores is not None else ''
+        
+        font = cv2.FONT_HERSHEY_SIMPLEX
+
+        if class_name in ['bottle', 'cup']  :
+            xmin, ymin, xmax, ymax = [int(x) for x in bbox]
+            cv2.rectangle(img, (xmin, 512 - ymin), (xmax, 512 - ymax), (255,255,255), 3)
+
+            text = '{:s} {:s}'.format(class_name, score)
+            cv2.putText(img, text,(xmin, ymin - 2,), font, 1,(255,255,255),2,cv2.LINE_AA)
+
+    return img

@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_socketio import SocketIO
-import bot
+# import bot
 
 app = Flask(__name__)
 
@@ -16,38 +16,38 @@ socketio = SocketIO(app)
 @socketio.on('move forward')
 def move_forward():
     print('forward', 0.1)
-    bot.bot_forward()
+    # bot.bot_forward()
 
 
 @socketio.on('move backward')
 def move_backward():
     print('backward', 0.1)
-    bot.bot_stop()
+    # bot.bot_stop()
 
 
 @socketio.on('turn left')
 def turn_left():
     print('left', 0.1)
-    bot.bot_left()
+    # bot.bot_left()
 
 
 @socketio.on('turn right')
 def turn_right():
     print('right', 0.1)
-    bot.bot_right()
+    # bot.bot_right()
 
 
 @socketio.on('rotate arm left')
 def arm_rotate_left():
     print('arm rotate left', 0.1)
-    bot.plat_left()
+    # bot.plat_left()
 
 
 @socketio.on('rotate arm right')
 def arm_rotate_right():
     print('arm rotate right', 0.1)
-    bot.plat_right()
+    # bot.plat_right()
 
 
-# if __name__ == '__main__':
-#     socketio.run(app)
+if __name__ == '__main__':
+    socketio.run(app, host='0.0.0.0', port=8100, debug=True)

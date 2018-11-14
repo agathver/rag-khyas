@@ -48,8 +48,8 @@ def bot_forward():
     GPIO.output("P8_10", GPIO.LOW)
     GPIO.output("P8_12", GPIO.HIGH)
     GPIO.output("P8_14", GPIO.LOW)
-    #time.sleep(2)
-    #bot_stop()
+    time.sleep(2)
+    bot_stop()
 
 def bot_stop():
     GPIO.output("P8_8", GPIO.LOW)

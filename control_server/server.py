@@ -68,8 +68,15 @@ def bbox():
     ymin = request.form.get('ymin')
     xmax = request.form.get('xmax')
     ymax = request.form.get('ymax')
-
     print(xmin, ymin, xmax, ymax)
+    image_size=(640,480)
+    if (ymax-ymin < image_size[1]/2):
+        bot.bot_forward()
+        if (xmax-xmin < image_size[0]/2):
+        bot.bot_left()
+    else:
+        bot.bot_stop()
+
 
     return "OK"
 

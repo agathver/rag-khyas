@@ -8,7 +8,8 @@ def plot_bbox(img, bboxes, scores=None, labels=None, thresh=0.5,
     
     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
 
-    # from matplotlib import pyplot as plt
+    bbox = None
+    detected = False
 
     if labels is not None and not len(bboxes) == len(labels):
         raise ValueError('The length of labels and bboxes mismatch, {} vs {}'
@@ -58,11 +59,16 @@ def plot_bbox(img, bboxes, scores=None, labels=None, thresh=0.5,
         
         font = cv2.FONT_HERSHEY_SIMPLEX
 
-        if class_name in ['bottle', 'cup']  :
+        if class_name in ['bottle', 'cup']:
+            detected = True
+
             xmin, ymin, xmax, ymax = [int(x) for x in bbox]
-            cv2.rectangle(img, (xmin, 512 - ymin), (xmax, 512 - ymax), (255,255,255), 3)
+
+            bbox = (xmin, ymin, xmax, ymax)
+
+            cv2.rectangle(img, (xmin, ymin), (xmax, ymax), (255,255,255), 3)
 
             text = '{:s} {:s}'.format(class_name, score)
             cv2.putText(img, text,(xmin, ymin - 2,), font, 1,(255,255,255),2,cv2.LINE_AA)
 
-    return img
+    return (img, detected, bbox)

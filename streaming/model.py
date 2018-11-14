@@ -12,8 +12,38 @@ import mxnet as mx
 import bounding_box
 from mjpeg_client import MJPEGClient
 
+from queue import Queue
+from threading import Thread
+import requests
+
+q = Queue()
+
+def command_loop():
+    global q
+
+    while True:
+        tup = q.get()
+        print(tup)
+        r = requests.post(sys.argv[2], data={
+            'xmin': tup[0],
+            'ymin': tup[1],
+            'xmax': tup[2],
+            'ymax': tup[3]
+        })
+        #print(sent, r.text)
+
+def start_commander():
+    t = Thread(target=command_loop)
+    t.daemon = True
+    t.start()
+
+def send_bbox(tup):
+    q.put(tup)
+
 
 def detection_loop():
+
+    start_commander()
 
     net = gcv.model_zoo.get_model('ssd_512_mobilenet1.0_voc', pretrained=True)
 
@@ -23,8 +53,6 @@ def detection_loop():
     client.start()
 
     csrc = iter(client)
-
-    axes = None
 
     while True:
         # Load frame from the camera
@@ -45,11 +73,15 @@ def detection_loop():
 
         # gcv.utils.viz.plot_bbox(frame, bounding_boxes[0], scores[0],
         #                      class_IDs[0], class_names=net.classes, )
-        img = bounding_box.plot_bbox(frame, bounding_boxes[0], scores[0],
+        img, detected, bbox = bounding_box.plot_bbox(frame, bounding_boxes[0], scores[0],
                             class_IDs[0], class_names=net.classes, )
 
-        #plt.show()
+        if detected:
+            #print('detected bottle')
+            print(bbox)
+            send_bbox(bbox)
 
-        # cv2.imshow("test", img)
-        # cv2.waitKey(1)
+        
         yield img
+
+

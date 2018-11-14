@@ -1,0 +1,21 @@
+html, body {
+    height: 100%;
+}
+.sidebar {
+    min-width: 250px;
+    max-width: 350px;
+    background: #e0e0e0;
+}
+
+.sidebar .nav-pills .nav-link {
+    border-radius: 0;
+}
+
+.content {
+    flex-grow: 1;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}

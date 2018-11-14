@@ -5,6 +5,7 @@ bot_avail = False
 
 try:
     import bot
+    bot.setup()
     bot_avail = True
 except:
     print('No bot control')

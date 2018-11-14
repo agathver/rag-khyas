@@ -22,6 +22,9 @@ document.addEventListener('keypress', event => {
     case 'ArrowRight':
       socket.emit('rotate arm right');
       break;
+    case ' ':
+      socket.emit('break');
+      break;
     default:
       console.log(key);
     //   socket.emit('move forward');

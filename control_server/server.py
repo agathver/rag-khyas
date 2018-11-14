@@ -20,6 +20,11 @@ def hello_world():
 
 socketio = SocketIO(app)
 
+@socketio.on('break')
+def break_motor():
+    print('break')
+    if bot_avail:
+        bot.stop_all_motors()
 
 @socketio.on('move forward')
 def move_forward():
@@ -73,7 +78,7 @@ def bbox():
     if (ymax-ymin < image_size[1]/2):
         bot.bot_forward()
         if (xmax-xmin < image_size[0]/2):
-        bot.bot_left()
+            bot.bot_left()
     else:
         bot.bot_stop()
 

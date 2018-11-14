@@ -2,6 +2,18 @@ import time
 import Adafruit_BBIO.GPIO as GPIO
 import Adafruit_BBIO.PWM as PWM
 
+def stop_all_motors():
+    # forward / back
+    GPIO.output("P8_8", GPIO.LOW)
+    GPIO.output("P8_10", GPIO.LOW)
+
+    # servo
+    GPIO.output("P8_15", GPIO.LOW)
+    GPIO.output("P8_17", GPIO.LOW)
+
+    # suction
+    GPIO.output("P8_12", GPIO.LOW)
+    GPIO.output("P8_14", GPIO.LOW)
 
 def setup():
     GPIO.setup("P8_7", GPIO.OUT)
@@ -28,6 +40,9 @@ def setup():
 
     PWM.start(servo_pin, (100-duty_min), 60.0)
     duty = 100 - ((30 / 180) * duty_span + duty_min)
+
+    stop_all_motors()
+
 
 def bot_left():
     GPIO.output("P8_8", GPIO.LOW)

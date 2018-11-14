@@ -25,6 +25,13 @@ document.addEventListener('keypress', event => {
     case ' ':
       socket.emit('break');
       break;
+
+    case 'p':
+      socket.emit('suction start');
+      break;
+    case 'o':
+      socket.emit('suction stop');
+      break;
     default:
       console.log(key);
     //   socket.emit('move forward');

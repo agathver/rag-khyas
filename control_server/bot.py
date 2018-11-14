@@ -73,16 +73,24 @@ def bot_stop():
     GPIO.output("P8_14", GPIO.LOW)
     #time.sleep(0.2)
 
-def plat_left(n):
+def plat_left():
     GPIO.output("P8_15", GPIO.HIGH)
     GPIO.output("P8_17", GPIO.LOW)
-    time.sleep(n)
-    plat_right()
+    #time.sleep(0.2)
+    #plat_right()
 
 def plat_right():
     GPIO.output("P8_15", GPIO.LOW)
     GPIO.output("P8_17", GPIO.HIGH)
-    time.sleep(0.2)
+    #time.sleep(0.2)
+
+def suction_start():
+    GPIO.output("P8_12", GPIO.LOW)
+    GPIO.output("P8_14", GPIO.HIGH)
+
+def suction_end():
+    GPIO.output("P8_12", GPIO.LOW)
+    GPIO.output("P8_14", GPIO.LOW)
 
 def servo_up():
     GPIO.output("P8_9", GPIO.HIGH)

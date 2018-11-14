@@ -67,6 +67,18 @@ def arm_rotate_right():
     if bot_avail:
         bot.plat_right()
 
+@socketio.on('suction start')
+def suction_start():
+    print('suction start')
+    if bot_avail:
+        bot.suction_start()
+
+@socketio.on('suction stop')
+def suction_stop():
+    print('suction stop')
+    if bot_avail:
+        bot.suction_end()
+
 @app.route('/bbox', methods=['POST'])
 def bbox():
     xmin = request.form.get('xmin')

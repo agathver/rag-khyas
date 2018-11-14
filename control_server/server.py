@@ -90,7 +90,7 @@ def bbox():
     if (ymax-ymin < image_size[1]/2):
         bot.bot_forward()
         if (xmax-xmin < image_size[0]/2):
-            bot.bot_left()
+            bot.plat_left()
     else:
         bot.bot_stop()
 

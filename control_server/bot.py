@@ -44,40 +44,33 @@ def setup():
     stop_all_motors()
 
 
-def bot_left():
-    GPIO.output("P8_8", GPIO.LOW)
-    GPIO.output("P8_10", GPIO.LOW)
-    GPIO.output("P8_12", GPIO.HIGH)
-    GPIO.output("P8_14", GPIO.LOW)
-    #time.sleep(2)
+# def bot_left():
+#     GPIO.output("P8_8", GPIO.LOW)
+#     GPIO.output("P8_10", GPIO.LOW)
 
-def bot_right():
-    GPIO.output("P8_8", GPIO.HIGH)
-    GPIO.output("P8_10", GPIO.LOW)
-    GPIO.output("P8_12", GPIO.LOW)
-    GPIO.output("P8_14", GPIO.LOW)
-    #time.sleep(2)
+#     #time.sleep(2)
+
+# def bot_right():
+#     GPIO.output("P8_8", GPIO.HIGH)
+#     GPIO.output("P8_10", GPIO.LOW)
+#     #time.sleep(2)
 
 def bot_forward():
     GPIO.output("P8_8", GPIO.HIGH)
     GPIO.output("P8_10", GPIO.LOW)
-    GPIO.output("P8_12", GPIO.HIGH)
-    GPIO.output("P8_14", GPIO.LOW)
-    time.sleep(2)
-    bot_stop()
+    time.sleep(1)
+    GPIO.output("P8_8", GPIO.LOW)
 
 def bot_stop():
     GPIO.output("P8_8", GPIO.LOW)
     GPIO.output("P8_10", GPIO.LOW)
-    GPIO.output("P8_12", GPIO.LOW)
-    GPIO.output("P8_14", GPIO.LOW)
-    #time.sleep(0.2)
+
 
 def plat_left():
     GPIO.output("P8_15", GPIO.HIGH)
     GPIO.output("P8_17", GPIO.LOW)
-    #time.sleep(0.2)
-    #plat_right()
+    time.sleep(0.4)
+    GPIO.output("P8_15", GPIO.LOW)
 
 def plat_right():
     GPIO.output("P8_15", GPIO.LOW)
@@ -92,19 +85,19 @@ def suction_end():
     GPIO.output("P8_12", GPIO.LOW)
     GPIO.output("P8_14", GPIO.LOW)
 
-def servo_up():
-    GPIO.output("P8_9", GPIO.HIGH)
-    GPIO.output("P8_11", GPIO.LOW)
-    PWM.set_duty_cycle(servo_pin, duty)
-    PWM.stop(servo_pin)
-    PWM.cleanup()
+# def servo_up():
+#     GPIO.output("P8_9", GPIO.HIGH)
+#     GPIO.output("P8_11", GPIO.LOW)
+#     PWM.set_duty_cycle(servo_pin, duty)
+#     PWM.stop(servo_pin)
+#     PWM.cleanup()
 
-def servo_down():
-    GPIO.output("P8_9", GPIO.LOW)
-    GPIO.output("P8_11", GPIO.HIGH)
-    PWM.set_duty_cycle(servo_pin, duty)
-    PWM.stop(servo_pin)
-    PWM.cleanup()
+# def servo_down():
+#     GPIO.output("P8_9", GPIO.LOW)
+#     GPIO.output("P8_11", GPIO.HIGH)
+#     PWM.set_duty_cycle(servo_pin, duty)
+#     PWM.stop(servo_pin)
+#     PWM.cleanup()
 
 def get_distance():
     GPIO.setmode(GPIO.BCM)
